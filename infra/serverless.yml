@@ -21,7 +21,7 @@ provider:
 
 
 functions:
-  hello:
+  app:
     handler: handler.hello
     events:
       - httpApi:
