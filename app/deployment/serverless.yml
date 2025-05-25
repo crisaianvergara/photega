@@ -1,0 +1,29 @@
+service: photega
+frameworkVersion: "4"
+
+
+custom:
+  s3Bucket: ${self:service}-${self:provider.stage}-${self:provider.region}-bucket
+  dynamodbTable: ${self:service}-${self:provider.stage}-${self:provider.region}-table
+
+
+provider:
+  name: aws
+  runtime: python3.12
+  stage: dev
+  region: ap-southeast-1
+  stackName: ${self:service}-${self:provider.stage}-${self:provider.region}-stack
+  timeout: 30
+
+  environment:
+    S3_BUCKET: ${self:custom.s3Bucket}
+    DYNAMODB_TABLE: ${self:custom.dynamodbTable}
+
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
