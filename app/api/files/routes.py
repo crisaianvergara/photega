@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-router = APIRouter(
+files = APIRouter(
     prefix="/files",
     tags=["files"],
     dependencies=[],
@@ -8,11 +8,11 @@ router = APIRouter(
 )
 
 
-@router.get("/")
+@files.get("/")
 async def read_files():
     return [{"file1": "File 1"}, {"file2": "File 2"}]
 
 
-@router.post("/upload")
+@files.post("/upload")
 async def read_files():
     return [{"upload": "Uploading"}]

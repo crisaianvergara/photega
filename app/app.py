@@ -7,7 +7,8 @@ from fastapi.templating import Jinja2Templates
 
 from mangum import Mangum
 
-from .api import files
+from .api.files.routes import files
+from .core import config, redis
 
 app = FastAPI()
 
@@ -18,13 +19,17 @@ templates_path = os.path.join(base_dir, "templates")
 app.mount("/static", StaticFiles(directory=static_path), name="static")
 templates = Jinja2Templates(directory=templates_path)
 
-app.include_router(files.router)
+app.include_router(files)
 
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse(
-        request=request, name="index.html", context={}
+        request=request,
+        name="index.html",
+        context={
+            "title": "Home"
+        }
     )
 
 
