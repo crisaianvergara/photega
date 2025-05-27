@@ -22,8 +22,11 @@ provider:
 
 functions:
   app:
-    handler: handler.hello
+    handler: app/app.handler
     events:
-      - httpApi:
+      - http:
           path: /
-          method: get
+          method: any
+      - http:
+          path: /{proxy+}
+          method: any

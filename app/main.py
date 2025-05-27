@@ -7,8 +7,8 @@ from fastapi.templating import Jinja2Templates
 
 from mangum import Mangum
 
-from .api.files.routes import files
-from .core import config, redis
+from app.api.files.routes import files
+from app.core.config import settings
 
 app = FastAPI()
 
