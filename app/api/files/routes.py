@@ -2,9 +2,7 @@ from fastapi import APIRouter
 
 files = APIRouter(
     prefix="/files",
-    tags=["files"],
-    dependencies=[],
-    responses={404: {"description": "Not found"}}
+    tags=["files"]
 )
 
 
