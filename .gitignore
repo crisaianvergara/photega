@@ -1,6 +1,5 @@
-.serverless
-# Created by https://www.toptal.com/developers/gitignore/api/python
-# Edit at https://www.toptal.com/developers/gitignore?templates=python
+# Created by https://www.toptal.com/developers/gitignore/api/react,python
+# Edit at https://www.toptal.com/developers/gitignore?templates=react,python
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -126,6 +125,8 @@ celerybeat.pid
 
 # Environments
 .env
+frontend/.env
+backend/.env
 .venv
 env/
 venv/
@@ -174,4 +175,19 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-# End of https://www.toptal.com/developers/gitignore/api/python
+### react ###
+.DS_*
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+# End of https://www.toptal.com/developers/gitignore/api/react,python
