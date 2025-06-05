@@ -1,5 +1,4 @@
-import React from "react";
-import logo from "../assets/img/gallery.png";
+// import logo from "../assets/img/gallery.png";
 
 
 function Header () {
@@ -9,7 +8,10 @@ function Header () {
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="flex shrink-0 items-center">
-                            <img className="h-8 w-auto" src={logo} alt="Photega" />
+                            {/* <img className="h-8 w-auto" src={logo} alt="Photega" /> */}
+                            <img className="h-8 w-auto"
+                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                                alt="Photega" />
                         </div>
                         <div className="sm:ml-6 sm:block">
                             <div className="flex space-x-4">
