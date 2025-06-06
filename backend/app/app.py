@@ -3,6 +3,7 @@ import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -12,8 +13,8 @@ from mangum import Mangum
 from app.api.files.routes import files
 from app.api.users.routes import users
 
+from app.core.config import settings
 from app.core.db import create_db_and_tables
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -22,12 +23,19 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Photega",
-    version="0.1.0",
-    description="File sharing application.",
+    title=settings.PROJECT_NAME,
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    description="File storage application.",
     lifespan=lifespan
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.all_cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 base_dir = os.path.dirname(__file__)
 static_path = os.path.join(base_dir, "static")

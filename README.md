@@ -9,5 +9,8 @@
 
 ## React-TS
 - npm create vite@latest .
-- npm install react-router-dom
-- npm install react-hook-form
+- npm i react-router
+- npm i axios
+
+## Git
+- git rm --cached frontend/.env
