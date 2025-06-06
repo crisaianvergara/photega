@@ -1,5 +1,5 @@
 // import logo from "../assets/img/gallery.png";
-
+import { Link } from "react-router";
 
 function Header () {
     return (
@@ -9,14 +9,17 @@ function Header () {
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="flex shrink-0 items-center">
                             {/* <img className="h-8 w-auto" src={logo} alt="Photega" /> */}
-                            <img className="h-8 w-auto"
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                                alt="Photega" />
+                            <Link to="/">
+                                <img className="h-8 w-auto"
+                                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                                    alt="Photega"
+                                />
+                            </Link>
                         </div>
                         <div className="sm:ml-6 sm:block">
                             <div className="flex space-x-4">
-                                <a href="#" className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Sign In</a>
-                                <a href="#" className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create account</a>
+                                <Link to="/login" className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Sign In</Link>
+                                <Link to="/register" className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create account</Link>
                             </div>
                         </div>
                     </div>

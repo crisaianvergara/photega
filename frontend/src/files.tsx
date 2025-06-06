@@ -1,4 +1,6 @@
-const files = [
+import type { File } from "./components/Files/FileList"
+
+const files: File[] = [
   {
     "id": "1",
     "file": "/images/phone.jpg",
