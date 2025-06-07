@@ -18,5 +18,8 @@
 - npm i react-router
 - npm i axios
 
-## Git
+## GIT
 - git rm --cached frontend/.env
+
+## PRE-COMMIT
+- https://pre-commit.com/
