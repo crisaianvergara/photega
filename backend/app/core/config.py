@@ -1,8 +1,4 @@
-from pydantic import (
-    AnyUrl,
-    BeforeValidator,
-    computed_field, PostgresDsn
-)
+from pydantic import AnyUrl, BeforeValidator, computed_field, PostgresDsn
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -19,15 +15,13 @@ def parse_cors(origins: Any) -> list[str] | str:
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
-        env_ignore_empty=True,
-        extra="ignore"
+        env_file=".env", env_ignore_empty=True, extra="ignore"
     )
-        
+
     redis_url: str = "redis://localhost:6379"
 
     ENVIRONMENT: Literal["local", "staging", "production"] = "local"
-    
+
     PROJECT_NAME: str
     API_V1_STR: str = "/api/v1"
 
@@ -40,14 +34,16 @@ class Settings(BaseSettings):
     SECRET: str = ""
 
     FRONTEND_HOST: str
-    BACKEND_CORS_ORIGINS: Annotated[list[AnyUrl] | str, BeforeValidator(parse_cors)] = []
-
+    BACKEND_CORS_ORIGINS: Annotated[
+        list[AnyUrl] | str, BeforeValidator(parse_cors)
+    ] = []
 
     @computed_field
     @property
     def all_cors_origins(self) -> list[str]:
-        return [str(origin).rstrip("/") for origin in self.BACKEND_CORS_ORIGINS] + [self.FRONTEND_HOST]
-
+        return [str(origin).rstrip("/") for origin in self.BACKEND_CORS_ORIGINS] + [
+            self.FRONTEND_HOST
+        ]
 
     @computed_field
     @property
@@ -58,9 +54,8 @@ class Settings(BaseSettings):
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_SERVER,
             port=self.POSTGRES_PORT,
-            path=self.POSTGRES_DB
+            path=self.POSTGRES_DB,
         )
 
+
 settings = Settings()
-
-

@@ -35,7 +35,7 @@ app.add_middleware(
     allow_origins=settings.all_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 base_dir = os.path.dirname(__file__)
@@ -52,11 +52,7 @@ app.include_router(users)
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse(
-        request=request,
-        name="index.html",
-        context={
-            "title": "Home"
-        }
+        request=request, name="index.html", context={"title": "Home"}
     )
 
 

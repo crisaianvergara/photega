@@ -1,11 +1,7 @@
 from fastapi import Depends
 
 from app.api.users.models import User
-from app.api.users.user_manager import (
-    auth_backend,
-    current_active_user,
-    fastapi_users
-) 
+from app.api.users.user_manager import auth_backend, current_active_user, fastapi_users
 from app.api.users.schemas import (
     UserCreate,
     UserRead,
@@ -22,7 +18,7 @@ users.include_router(
         # requires_verification=True
     ),
     prefix="/auth/jwt",
-    tags=["auth"]
+    tags=["auth"],
 )
 
 users.include_router(
@@ -48,6 +44,7 @@ users.include_router(
     prefix="/users",
     tags=["users"],
 )
+
 
 @users.get("/authenticated-route")
 async def authenticated_route(user: User = Depends(current_active_user)):

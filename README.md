@@ -23,3 +23,12 @@
 
 ## PRE-COMMIT
 - https://pre-commit.com/
+
+## PRETTIER
+- https://andrebnassis.medium.com/setting-prettier-on-a-react-typescript-project-2021-f9f0d5a1d6b0
+- npx prettier --write .
+
+
+## BLACK
+- https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter
+- black .

@@ -5,6 +5,7 @@ Revises: eb4c750bdc62
 Create Date: 2025-06-07 16:39:45.953284
 
 """
+
 from typing import Sequence, Union
 
 from alembic import op
@@ -13,8 +14,8 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = '2a1bca763766'
-down_revision: Union[str, None] = 'eb4c750bdc62'
+revision: str = "2a1bca763766"
+down_revision: Union[str, None] = "eb4c750bdc62"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

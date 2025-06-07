@@ -1,6 +1,4 @@
-function DownloadButton ({ onClick }: {
-    onClick: () => void
-}) {
+function DownloadButton({ onClick }: { onClick: () => void }) {
     return (
         <>
             <button
@@ -11,7 +9,7 @@ function DownloadButton ({ onClick }: {
                 Download
             </button>
         </>
-    );
-};
+    )
+}
 
-export default DownloadButton;
+export default DownloadButton

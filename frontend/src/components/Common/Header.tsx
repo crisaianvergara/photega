@@ -1,7 +1,7 @@
 // import logo from "../assets/img/gallery.png";
-import { Link } from "react-router";
+import { Link } from 'react-router'
 
-function Header () {
+function Header() {
     return (
         <header>
             <nav className="bg-gray-800">
@@ -10,7 +10,8 @@ function Header () {
                         <div className="flex shrink-0 items-center">
                             {/* <img className="h-8 w-auto" src={logo} alt="Photega" /> */}
                             <Link to="/">
-                                <img className="h-8 w-auto"
+                                <img
+                                    className="h-8 w-auto"
                                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                                     alt="Photega"
                                 />
@@ -18,15 +19,25 @@ function Header () {
                         </div>
                         <div className="sm:ml-6 sm:block">
                             <div className="flex space-x-4">
-                                <Link to="/login" className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Sign In</Link>
-                                <Link to="/register" className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create account</Link>
+                                <Link
+                                    to="/login"
+                                    className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                                >
+                                    Sign In
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                                >
+                                    Create account
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
         </header>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header

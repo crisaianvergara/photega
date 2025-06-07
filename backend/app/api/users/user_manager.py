@@ -9,7 +9,7 @@ from fastapi_users.db import SQLAlchemyUserDatabase
 from fastapi_users.authentication import (
     AuthenticationBackend,
     BearerTransport,
-    JWTStrategy
+    JWTStrategy,
 )
 
 from app.api.users.models import User
@@ -21,16 +21,17 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = settings.SECRET
     verification_token_secret = settings.SECRET
 
-
     async def on_after_register(self, user: User, request: Request | None = None):
         print(f"User {user.id} has registered.")
-    
 
-    async def on_after_forgot_password(self, user: User, token: str, request: Request | None = None):
+    async def on_after_forgot_password(
+        self, user: User, token: str, request: Request | None = None
+    ):
         print(f"User {user.id} has forgot their password. Reset token: {token}")
 
-    
-    async def on_after_request_verify(self, user: User, token: str, request: Request| None = None):
+    async def on_after_request_verify(
+        self, user: User, token: str, request: Request | None = None
+    ):
         print(f"Verification requested for user {user.id}. Verification: {token}")
 
 
@@ -50,9 +51,7 @@ def get_jwt_strategy() -> JWTStrategy[models.UP, models.ID]:
 
 
 auth_backend = AuthenticationBackend(
-    name="jwt",
-    transport=bearer_transport,
-    get_strategy=get_jwt_strategy
+    name="jwt", transport=bearer_transport, get_strategy=get_jwt_strategy
 )
 
 fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
