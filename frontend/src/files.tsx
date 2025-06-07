@@ -1,4 +1,4 @@
-import type { File } from "./components/Files/FileList"
+import type { File } from "./types/file"
 
 const files: File[] = [
   {

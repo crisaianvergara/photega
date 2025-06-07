@@ -16,17 +16,18 @@ from app.api.users.routes import users
 from app.core.config import settings
 from app.core.db import create_db_and_tables
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await create_db_and_tables()
-    yield
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     """Not needed if you setup a migration system like Alembic"""
+#     await create_db_and_tables()
+#     yield
 
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     description="File storage application.",
-    lifespan=lifespan
+    # lifespan=lifespan
 )
 
 app.add_middleware(
