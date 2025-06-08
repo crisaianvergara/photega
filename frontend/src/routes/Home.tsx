@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FileList from "../components/Files/FileList";
 import type { File } from "../types/file";
-import API from "../lib/axios";
+import instance from "../lib/axios";
 
 function Home() {
   const [files, setFiles] = useState<File[]>([]);
@@ -11,7 +11,7 @@ function Home() {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const { data } = await API.get<File[]>("/files");
+        const { data } = await instance.get<File[]>("/files");
         setFiles(data);
       } catch (error) {
         setError("Failed to load files.");

@@ -4,6 +4,9 @@ from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession as Session
 
 from app.api.files.models import File, FileCreate, FilePublic, FileUpdate
+from app.api.users.models import User
+from app.api.users.user_manager import current_active_user
+
 from app.core.db import get_async_session
 
 files = APIRouter(prefix="/files", tags=["files"])
@@ -11,7 +14,10 @@ files = APIRouter(prefix="/files", tags=["files"])
 
 @files.post("/", status_code=status.HTTP_201_CREATED, response_model=FilePublic)
 async def create_file(
-    *, session: Session = Depends(get_async_session), file: FileCreate
+    *,
+    session: Session = Depends(get_async_session),
+    file: FileCreate,
+    user: User = Depends(current_active_user)
 ) -> FilePublic:
     db_file = File.model_validate(file)
     session.add(db_file)
@@ -22,7 +28,10 @@ async def create_file(
 
 @files.get("/{file_id}", response_model=FilePublic)
 async def read_file(
-    *, session: Session = Depends(get_async_session), file_id: str
+    *,
+    session: Session = Depends(get_async_session),
+    file_id: str,
+    user: User = Depends(current_active_user)
 ) -> FilePublic:
     file = await session.get(File, file_id)
 
@@ -38,6 +47,7 @@ async def read_files(
     session: Session = Depends(get_async_session),
     offset: int = 0,
     limit: int = Query(default=100, le=100),
+    user: User = Depends(current_active_user)
 ) -> list[FilePublic]:
     files = await session.exec(select(File).offset(offset).limit(limit))
     return files.all()
@@ -45,7 +55,11 @@ async def read_files(
 
 @files.patch("/{file_id}", response_model=FilePublic)
 async def update_file(
-    *, session: Session = Depends(get_async_session), file_id: str, file: FileUpdate
+    *,
+    session: Session = Depends(get_async_session),
+    file_id: str,
+    file: FileUpdate,
+    user: User = Depends(current_active_user)
 ) -> FilePublic:
     db_file = await session.get(File, file_id)
 
@@ -61,7 +75,12 @@ async def update_file(
 
 
 @files.delete("/{file_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_file(*, session: Session = Depends(get_async_session), file_id: str):
+async def delete_file(
+    *,
+    session: Session = Depends(get_async_session),
+    file_id: str,
+    user: User = Depends(current_active_user)
+):
     file = await session.get(File, file_id)
 
     if not file:

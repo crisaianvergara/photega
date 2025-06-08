@@ -38,11 +38,4 @@ app.include_router(files)
 app.include_router(users)
 
 
-@app.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse(
-        request=request, name="index.html", context={"title": "Home"}
-    )
-
-
 handler = Mangum(app)
