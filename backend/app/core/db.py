@@ -1,23 +1,26 @@
 from collections.abc import AsyncGenerator
 
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
 from sqlmodel import SQLModel
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.core.config import settings
 
 engine = create_async_engine(
     url=settings.SQLALCHEMY_DATABASE_URI.unicode_string(), echo=True
 )
-async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+async_session_maker = async_sessionmaker(
+    engine, class_=AsyncSession, expire_on_commit=False
+)
 
 
 class Base(DeclarativeBase):
     pass
 
 
-async def create_db_and_tables():
+async def create_db_and_tables() -> None:
     """Not needed if you setup a migration system like Alembic"""
     from app.api.files.models import File
 
