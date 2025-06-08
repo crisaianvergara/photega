@@ -1,33 +1,46 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import FileList from '../components/Files/FileList'
-import type { File } from '../types/file'
+import { useEffect, useState } from "react";
+import FileList from "../components/Files/FileList";
+import type { File } from "../types/file";
+import API from "../lib/axios";
 
 function Home() {
-    const [files, setFiles] = useState([])
+  const [files, setFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        async function fetchFiles() {
-            const { data } = await axios.get('http://localhost:8000/files/')
-            console.log(`FILES: ${data}`)
-            setFiles(data)
-        }
-        fetchFiles()
-    }, [])
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const { data } = await API.get<File[]>("/files");
+        setFiles(data);
+      } catch (error) {
+        setError("Failed to load files.");
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFiles();
+  }, []);
 
-    function handleDownload(file: File) {
-        console.log(`Download button clicked for file: ${file.id}!`)
-        return
-    }
+  function handleDownload(file: File) {
+    console.log(`Download button clicked for file: ${file.id}!`);
+    return;
+  }
 
-    return (
-        <section>
-            <h1 className="my-3 text-2xl/9 font-bold tracking-tight text-gray-900">
-                Files
-            </h1>
-            <FileList files={files} onDownloadClick={handleDownload} />
-        </section>
-    )
+  return (
+    <section>
+      <h1 className="my-3 text-2xl/9 font-bold tracking-tight text-gray-900">
+        Files
+      </h1>
+      <FileList
+        files={files}
+        onDownloadClick={handleDownload}
+        loading={loading}
+        error={error}
+      />
+    </section>
+  );
 }
 
-export default Home
+export default Home;

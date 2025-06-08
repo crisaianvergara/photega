@@ -1,5 +1,6 @@
 import DownloadButton from "./DownloadButton";
 import type { File } from "../../types/file";
+import { formatDate } from "../../utils/formatDate";
 
 function FileItem({
   file,
@@ -20,7 +21,7 @@ function FileItem({
         {file.owner}
       </td>
       <td className="px-6 py-4 whitespace-nowrap border-b border-gray-500">
-        {file.updated_at}
+        {formatDate(file.updated_at)}
       </td>
       <td className="px-6 py-4 whitespace-nowrap border-b border-gray-500">
         <DownloadButton onClick={onDownload} />
