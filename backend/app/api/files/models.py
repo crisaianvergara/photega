@@ -38,9 +38,6 @@ class FileCreate(FileBase):
 
 class FileUpdate(SQLModel):
     file_name: str | None = None
-    file_path: str | None = None
-    file_size: str | None = None
-    owner: str | None = None
 
 
 class FilePublic(FileBase):
