@@ -1,4 +1,28 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../features/auth/authSlice";
+import { useNavigate } from "react-router";
+import { type AppDispatch } from "../app/store";
+
 function SignIn() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    dispatch(login({ email, password })).then((action) => {
+      if (login.fulfilled.match(action)) {
+        localStorage.setItem("token", action.payload.access_token);
+        navigate("/");
+      } else {
+        console.log("Login failed:", action.payload);
+      }
+    });
+  };
+
   return (
     <section className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -12,7 +36,7 @@ function SignIn() {
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action="#" method="POST" className="space-y-6">
+        <form onSubmit={onSubmit} className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -28,6 +52,7 @@ function SignIn() {
                 required
                 autoComplete="email"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                onChange={(event) => setEmail(event.target.value)}
               />
             </div>
           </div>
@@ -56,7 +81,9 @@ function SignIn() {
                 type="password"
                 required
                 autoComplete="current-password"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="
+                                block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                onChange={(event) => setPassword(event.target.value)}
               />
             </div>
           </div>

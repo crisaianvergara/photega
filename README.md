@@ -28,6 +28,7 @@
 ## PRE-COMMIT
 
 - https://pre-commit.com/
+- pre-commit run --all-files -v
 
 ## PRETTIER
 
@@ -42,3 +43,11 @@
 ## CHECK GIT TAGS
 
 - git ls-remote --tags <hooks_repo_url>
+
+## REDUX
+
+- https://redux.js.org/introduction/installation
+
+## AXIOS
+
+- https://axios-http.com/docs/intro

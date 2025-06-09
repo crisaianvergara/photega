@@ -1,11 +1,9 @@
 service: photega
 frameworkVersion: "4"
 
-
 custom:
   s3Bucket: ${self:service}-${self:provider.stage}-${self:provider.region}-bucket
   dynamodbTable: ${self:service}-${self:provider.stage}-${self:provider.region}-table
-
 
 provider:
   name: aws
@@ -18,7 +16,6 @@ provider:
   environment:
     S3_BUCKET: ${self:custom.s3Bucket}
     DYNAMODB_TABLE: ${self:custom.dynamodbTable}
-
 
 functions:
   app:

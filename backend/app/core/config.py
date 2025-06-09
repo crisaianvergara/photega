@@ -34,9 +34,9 @@ class Settings(BaseSettings):
     SECRET: str = ""
 
     FRONTEND_HOST: str
-    BACKEND_CORS_ORIGINS: Annotated[
-        list[AnyUrl] | str, BeforeValidator(parse_cors)
-    ] = []
+    BACKEND_CORS_ORIGINS: Annotated[list[AnyUrl] | str, BeforeValidator(parse_cors)] = (
+        []
+    )
 
     @computed_field
     @property
