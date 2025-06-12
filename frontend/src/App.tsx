@@ -4,8 +4,16 @@ import Footer from './components/Common/Footer'
 import Home from './routes/Home'
 import SignIn from './routes/SignIn'
 import CreateAccount from './routes/CreateAccount'
+import { useAppDispatch, useAppSelector } from './app/hook'
+import { useEffect } from 'react'
 
 function App() {
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch
+    })
+
     return (
         <BrowserRouter>
             <Header />
