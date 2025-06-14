@@ -4,11 +4,11 @@ import { Navigate, useNavigate } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../app/hook'
 
 function SignIn() {
-    const navigate = useNavigate()
-    const dispatch = useAppDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const auth = useAppSelector((state) => state.auth)
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     if (auth.user) {
         return <Navigate to="/" />

@@ -9,7 +9,7 @@ function Home() {
     const [files, setFiles] = useState<File[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
-    const user = useAppSelector((state) => state.auth.user)
+    const auth = useAppSelector((state) => state.auth)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -28,10 +28,10 @@ function Home() {
     }, [])
 
     useEffect(() => {
-        if (!user) {
+        if (!auth.token || !auth.user) {
             navigate('/login')
         }
-    }, [user, navigate])
+    }, [auth, navigate])
 
     function handleDownload(file: File) {
         console.log(`Download button clicked for file: ${file.id}!`)

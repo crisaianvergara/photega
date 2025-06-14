@@ -1,5 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import type { LoginResponse, LoginRequest, User } from '../../types/auth'
+import {
+    type LoginResponse,
+    type LoginRequest,
+    type User,
+    type RegisterRequest,
+} from '../../types/auth'
 import instance from '../../lib/axios'
 
 export const login = createAsyncThunk<LoginResponse, LoginRequest>(
@@ -37,6 +42,28 @@ export const fetchCurrentUser = createAsyncThunk<User | any>(
     }
 )
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-    localStorage.removeItem('accessToken')
+export const register = createAsyncThunk<User, RegisterRequest>(
+    'auth/register',
+    async (userData, thunkAPI) => {
+        try {
+            const response = await instance.post('/auth/register', {
+                email: userData.email,
+                password: userData.password,
+            })
+
+            return response.data
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data.detail)
+        }
+    }
+)
+
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+    try {
+        const response = await instance.post('/auth/jwt/logout')
+        localStorage.removeItem('accessToken')
+        return response.data
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue(error.response.data.detail)
+    }
 })

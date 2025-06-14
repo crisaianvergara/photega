@@ -3,14 +3,14 @@ export interface LoginRequest {
     password: string
 }
 
-export interface RegisterRequest {
-    email: string
-    pass: string
-}
-
 export interface LoginResponse {
     access_token: string
     token_type: string
+}
+
+export interface RegisterRequest {
+    email: string
+    password: string
 }
 
 export interface User {

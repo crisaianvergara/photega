@@ -1,18 +1,35 @@
-import { useAppSelector } from '../app/hook'
-import { Navigate } from 'react-router'
+import { useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../app/hook'
+import { Navigate, useNavigate } from 'react-router'
+import { register } from '../features/auth/AuthThunk'
 
 function CreateAccount() {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const auth = useAppSelector((state) => state.auth)
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     if (auth.user) {
         return <Navigate to="/" />
+    }
+
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault()
+        dispatch(register({ email, password })).then((action) => {
+            if (register.fulfilled.match(action)) {
+                navigate('/login')
+            } else {
+                console.log('Register failed', action.payload)
+            }
+        })
     }
 
     return (
         <section className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
-                    alt="Your Company"
+                    alt="Photega"
                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                     className="mx-auto h-10 w-auto"
                 />
@@ -21,7 +38,7 @@ function CreateAccount() {
                 </h2>
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form action="#" method="POST" className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label
                             htmlFor="email"
@@ -37,6 +54,7 @@ function CreateAccount() {
                                 required
                                 autoComplete="email"
                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                     </div>
@@ -58,27 +76,7 @@ function CreateAccount() {
                                 required
                                 autoComplete="current-password"
                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="flex items-center justify-between">
-                            <label
-                                htmlFor="password"
-                                className="block text-sm/6 font-medium text-gray-900"
-                            >
-                                Password again
-                            </label>
-                        </div>
-                        <div className="mt-2">
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                autoComplete="current-password"
-                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                     </div>
