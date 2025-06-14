@@ -2,7 +2,7 @@ import { fetchCurrentUser, login } from '../features/auth/AuthThunk'
 import { Navigate, useNavigate } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../app/hook'
 import { useForm } from 'react-hook-form'
-import type { LoginRequest } from '../types/auth'
+import type { AuthRequest } from '../types/auth'
 
 function SignIn() {
     const auth = useAppSelector((state) => state.auth)
@@ -13,13 +13,13 @@ function SignIn() {
         handleSubmit,
         setError,
         formState: { errors },
-    } = useForm<LoginRequest>()
+    } = useForm<AuthRequest>()
 
     if (auth.user) {
         return <Navigate to="/" />
     }
 
-    const onSubmit = (data: LoginRequest) => {
+    const onSubmit = (data: AuthRequest) => {
         dispatch(login(data)).then((action) => {
             if (login.fulfilled.match(action)) {
                 localStorage.setItem('accessToken', action.payload.access_token)
@@ -102,11 +102,16 @@ function SignIn() {
                                 id="password"
                                 {...register('password', {
                                     required: 'Password is required.',
-                                    minLength: {
-                                        value: 5,
-                                        message:
-                                            'Minimum length is 5 characters.',
-                                    },
+                                    // minLength: {
+                                    //     value: 8,
+                                    //     message:
+                                    //         'Password must be at least 8 characters long.',
+                                    // },
+                                    // pattern: {
+                                    //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])/,
+                                    //     message:
+                                    //         'Password must include uppercase, lowercase, number, and special character.',
+                                    // },
                                 })}
                                 type="password"
                                 className="

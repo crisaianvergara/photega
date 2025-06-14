@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import {
     type LoginResponse,
-    type LoginRequest,
+    type AuthRequest,
     type User,
-    type RegisterRequest,
 } from '../../types/auth'
 import instance from '../../lib/axios'
 
-export const login = createAsyncThunk<LoginResponse, LoginRequest>(
+export const login = createAsyncThunk<LoginResponse, AuthRequest>(
     'auth/login',
     async (userData, thunkAPI) => {
         try {
@@ -42,7 +41,7 @@ export const fetchCurrentUser = createAsyncThunk<User | any>(
     }
 )
 
-export const register = createAsyncThunk<User, RegisterRequest>(
+export const createAccount = createAsyncThunk<User, AuthRequest>(
     'auth/register',
     async (userData, thunkAPI) => {
         try {
