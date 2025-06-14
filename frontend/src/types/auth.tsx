@@ -1,29 +1,29 @@
-export interface AuthState {
-    token: string | null
-    status: 'idle' | 'loading' | 'succeeded' | 'failed'
-    error: any
-}
-
-export interface AuthPayload {
+export interface LoginRequest {
     email: string
     password: string
 }
 
-export interface AuthResponse {
+export interface RegisterRequest {
+    email: string
+    pass: string
+}
+
+export interface LoginResponse {
     access_token: string
     token_type: string
 }
 
-export interface CurrentUserState {
-    id: string | null
-    email: string | null
-    is_active: boolean | null
-    is_superuser: boolean | null
-}
-
-export interface CurrentUserResponse {
+export interface User {
     id: string
     email: string
-    is_active: boolean
-    is_superuser: boolean
+    is_active: string
+    is_superuser: string
+    is_verified: string
+}
+
+export interface AuthState {
+    user: User | null
+    token: string | null
+    status: 'idle' | 'loading' | 'succeeded' | 'failed'
+    error: string | null
 }

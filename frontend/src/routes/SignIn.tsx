@@ -1,20 +1,26 @@
 import React, { useState } from 'react'
-import { login } from '../features/auth/AuthThunk'
-import { useNavigate } from 'react-router'
-import { useAppDispatch } from '../app/hook'
+import { fetchCurrentUser, login } from '../features/auth/AuthThunk'
+import { Navigate, useNavigate } from 'react-router'
+import { useAppDispatch, useAppSelector } from '../app/hook'
 
 function SignIn() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const auth = useAppSelector((state) => state.auth)
 
-    const onSubmit = (event: React.FormEvent) => {
+    if (auth.user) {
+        return <Navigate to="/" />
+    }
+
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
         dispatch(login({ email, password })).then((action) => {
             if (login.fulfilled.match(action)) {
                 localStorage.setItem('accessToken', action.payload.access_token)
+                dispatch(fetchCurrentUser())
                 navigate('/')
             } else {
                 console.log('Login failed:', action.payload)
@@ -35,7 +41,7 @@ function SignIn() {
                 </h2>
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form onSubmit={onSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label
                             htmlFor="email"
@@ -51,9 +57,7 @@ function SignIn() {
                                 required
                                 autoComplete="email"
                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                onChange={(event) =>
-                                    setEmail(event.target.value)
-                                }
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                     </div>
@@ -84,9 +88,7 @@ function SignIn() {
                                 autoComplete="current-password"
                                 className="
                                 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                onChange={(event) =>
-                                    setPassword(event.target.value)
-                                }
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                     </div>

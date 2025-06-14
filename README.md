@@ -18,8 +18,10 @@
 ## React-TS
 
 - npm create vite@latest .
-- npm i react-router
-- npm i axios
+
+## React Router
+
+- https://reactrouter.com/home
 
 ## GIT
 

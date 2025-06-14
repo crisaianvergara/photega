@@ -1,21 +1,22 @@
-import { BrowserRouter, Routes, Route } from 'react-router'
+import { Routes, Route } from 'react-router'
 import Header from './components/Common/Header'
 import Footer from './components/Common/Footer'
 import Home from './routes/Home'
 import SignIn from './routes/SignIn'
 import CreateAccount from './routes/CreateAccount'
-import { useAppDispatch, useAppSelector } from './app/hook'
+import { useAppDispatch } from './app/hook'
 import { useEffect } from 'react'
+import { fetchCurrentUser } from './features/auth/AuthThunk'
 
 function App() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch
-    })
+        dispatch(fetchCurrentUser())
+    }, [dispatch])
 
     return (
-        <BrowserRouter>
+        <>
             <Header />
             <main className="mx-auto max-w-7xl px-2 py-3 sm:px-6 lg:px-8">
                 <Routes>
@@ -25,7 +26,7 @@ function App() {
                 </Routes>
             </main>
             <Footer />
-        </BrowserRouter>
+        </>
     )
 }
 

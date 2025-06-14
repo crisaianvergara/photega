@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { AuthState } from '../../types/auth'
-import { login, logout } from './AuthThunk'
+import { login, logout, fetchCurrentUser } from './AuthThunk'
 
 const initialState: AuthState = {
+    user: null,
     token: null,
     status: 'idle',
     error: null,
@@ -23,9 +24,21 @@ export const authSlice = createSlice({
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = 'failed'
-                state.error = action.payload
+                state.error = action.payload as string
+            })
+            .addCase(fetchCurrentUser.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.user = action.payload
+            })
+            .addCase(fetchCurrentUser.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.payload as string
             })
             .addCase(logout.fulfilled, (state) => {
+                state.user = null
                 state.token = null
                 state.status = 'idle'
                 state.error = null

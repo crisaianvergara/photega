@@ -1,12 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import type {
-    AuthPayload,
-    AuthResponse,
-    CurrentUserResponse,
-} from '../../types/auth'
+import type { LoginResponse, LoginRequest, User } from '../../types/auth'
 import instance from '../../lib/axios'
 
-export const login = createAsyncThunk<AuthResponse, AuthPayload>(
+export const login = createAsyncThunk<LoginResponse, LoginRequest>(
     'auth/login',
     async (userData, thunkAPI) => {
         try {
@@ -22,7 +18,6 @@ export const login = createAsyncThunk<AuthResponse, AuthPayload>(
                     },
                 }
             )
-
             return response.data
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data.detail)
@@ -30,8 +25,8 @@ export const login = createAsyncThunk<AuthResponse, AuthPayload>(
     }
 )
 
-export const getCurrentUser = createAsyncThunk<CurrentUserResponse | any>(
-    'auth/getCurrentUser',
+export const fetchCurrentUser = createAsyncThunk<User | any>(
+    'auth/fetchCurrentUser',
     async (_, thunkAPI) => {
         try {
             const response = await instance.get('/users/me')
@@ -43,5 +38,5 @@ export const getCurrentUser = createAsyncThunk<CurrentUserResponse | any>(
 )
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('accessToken')
 })

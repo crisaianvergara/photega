@@ -1,7 +1,18 @@
 // import logo from "../assets/img/gallery.png";
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { useAppDispatch, useAppSelector } from '../../app/hook'
+import { logout } from '../../features/auth/AuthThunk'
 
 function Header() {
+    const auth = useAppSelector((state) => state.auth)
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
+    const logoutHandler = () => {
+        dispatch(logout())
+        navigate('/login')
+    }
+
     return (
         <header>
             <nav className="bg-gray-800">
@@ -19,18 +30,32 @@ function Header() {
                         </div>
                         <div className="sm:ml-6 sm:block">
                             <div className="flex space-x-4">
-                                <Link
-                                    to="/login"
-                                    className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                                >
-                                    Sign In
-                                </Link>
-                                <Link
-                                    to="/register"
-                                    className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                                >
-                                    Create account
-                                </Link>
+                                {auth.user ? (
+                                    <>
+                                        <button
+                                            type="submit"
+                                            className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
+                                            onClick={logoutHandler}
+                                        >
+                                            Logout
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            to="/login"
+                                            className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                                        >
+                                            Sign In
+                                        </Link>
+                                        <Link
+                                            to="/register"
+                                            className="rounded-md p-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                                        >
+                                            Create account
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
