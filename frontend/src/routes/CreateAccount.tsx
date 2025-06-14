@@ -26,7 +26,7 @@ function CreateAccount() {
             } else {
                 setError('root', {
                     type: '400 Bad Request',
-                    message: '400 Bad Request',
+                    message: 'An account with this email already exists.',
                 })
             }
         })

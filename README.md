@@ -23,6 +23,10 @@
 
 - https://reactrouter.com/home
 
+## React Hook Form
+
+- https://react-hook-form.com/
+
 ## GIT
 
 - git rm --cached frontend/.env
