@@ -28,10 +28,10 @@ function Home() {
     }, [])
 
     useEffect(() => {
-        if (!auth.token || !auth.user) {
+        if (!auth.user) {
             navigate('/login')
         }
-    }, [auth, navigate])
+    }, [auth.user, navigate])
 
     function handleDownload(file: File) {
         console.log(`Download button clicked for file: ${file.id}!`)
