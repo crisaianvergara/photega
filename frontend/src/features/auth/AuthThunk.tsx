@@ -61,7 +61,6 @@ export const createAccount = createAsyncThunk<User, AuthRequest>(
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     try {
         const response = await instance.post('/auth/jwt/logout')
-        localStorage.removeItem('accessToken')
         return response.data
     } catch (error: any) {
         return thunkAPI.rejectWithValue(error.response.data.detail)

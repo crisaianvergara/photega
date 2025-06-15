@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../app/hook'
 import { useForm } from 'react-hook-form'
 import type { AuthRequest } from '../types/auth'
+import toast from 'react-hot-toast'
 
 function SignIn() {
     const auth = useAppSelector((state) => state.auth)
@@ -11,7 +12,6 @@ function SignIn() {
     const {
         register,
         handleSubmit,
-        setError,
         formState: { errors },
     } = useForm<AuthRequest>()
 
@@ -24,12 +24,10 @@ function SignIn() {
             if (login.fulfilled.match(action)) {
                 localStorage.setItem('accessToken', action.payload.access_token)
                 dispatch(fetchCurrentUser())
+                toast.success('Logged in successfully.')
                 navigate('/')
             } else {
-                setError('root', {
-                    type: '400 Bad Request',
-                    message: 'Incorrect email address or password.',
-                })
+                toast.error('Incorrect email address or password.')
             }
         })
     }
@@ -116,9 +114,6 @@ function SignIn() {
                     </div>
 
                     <div>
-                        <p className="text-sm text-red-600 mb-2">
-                            {errors.root?.message}
-                        </p>
                         <button
                             type="submit"
                             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

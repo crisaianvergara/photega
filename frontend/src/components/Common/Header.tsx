@@ -2,6 +2,7 @@
 import { Link, useNavigate } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/hook'
 import { logout } from '../../features/auth/AuthThunk'
+import toast from 'react-hot-toast'
 
 function Header() {
     const auth = useAppSelector((state) => state.auth)
@@ -9,8 +10,15 @@ function Header() {
     const navigate = useNavigate()
 
     const logoutHandler = () => {
-        dispatch(logout())
-        navigate('/login')
+        dispatch(logout()).then((action) => {
+            if (logout.fulfilled.match(action)) {
+                localStorage.removeItem('accessToken')
+                toast.success('Logged out successfully.')
+                navigate('/login')
+            } else {
+                toast.error('Logout failed. Please try again.')
+            }
+        })
     }
 
     return (

@@ -27,6 +27,18 @@
 
 - https://react-hook-form.com/
 
+## React Hot Toast
+
+-https://react-hot-toast.com/
+
+## React Spinners
+
+-https://www.davidhu.io/react-spinners/
+
+## React Tooltip
+
+-https://react-tooltip.com/docs/getting-started
+
 ## GIT
 
 - git rm --cached frontend/.env

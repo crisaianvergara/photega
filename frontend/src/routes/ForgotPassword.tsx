@@ -2,9 +2,12 @@ import { forgotPassword } from '../features/auth/AuthThunk'
 import { useAppDispatch } from '../app/hook'
 import { useForm } from 'react-hook-form'
 import type { ForgotPasswordRequest } from '../types/auth'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router'
 
 function ForgotPassword() {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -14,9 +17,10 @@ function ForgotPassword() {
     const onSubmit = (data: ForgotPasswordRequest) => {
         dispatch(forgotPassword(data)).then((action) => {
             if (forgotPassword.fulfilled.match(action)) {
-                console.log(`A token sent to email: ${data.email}`)
+                toast.success('Check your email for the password reset link.')
+                navigate('/login')
             } else {
-                console.log('Failed to send token.')
+                toast.error('Failed to send reset token. Please try again.')
             }
         })
     }
