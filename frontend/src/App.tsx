@@ -7,6 +7,7 @@ import CreateAccount from './routes/CreateAccount'
 import { useAppDispatch } from './app/hook'
 import { useEffect } from 'react'
 import { fetchCurrentUser } from './features/auth/AuthThunk'
+import ForgotPassword from './routes/ForgotPassword'
 
 function App() {
     const dispatch = useAppDispatch()
@@ -23,6 +24,10 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<SignIn />} />
                     <Route path="/register" element={<CreateAccount />} />
+                    <Route
+                        path="/forgot-password"
+                        element={<ForgotPassword />}
+                    />
                 </Routes>
             </main>
             <Footer />

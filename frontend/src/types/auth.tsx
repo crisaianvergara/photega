@@ -22,3 +22,11 @@ export interface AuthState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed'
     error: string | null
 }
+
+export interface ForgotPasswordRequest {
+    email: string
+}
+
+export interface ResetPasswordRequest {
+    password: string
+}

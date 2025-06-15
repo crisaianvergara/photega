@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { AuthState } from '../../types/auth'
-import { login, logout, fetchCurrentUser, createAccount } from './AuthThunk'
+import {
+    login,
+    logout,
+    fetchCurrentUser,
+    createAccount,
+    forgotPassword,
+} from './AuthThunk'
 
 const initialState: AuthState = {
     user: null,
@@ -57,6 +63,16 @@ export const authSlice = createSlice({
                 state.error = null
             })
             .addCase(logout.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.payload as string
+            })
+            .addCase(forgotPassword.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(forgotPassword.fulfilled, (state) => {
+                state.status = 'succeeded'
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload as string
             })

@@ -16,7 +16,7 @@ function CreateAccount() {
     } = useForm<AuthRequest>()
 
     if (auth.user) {
-        return <Navigate to="/" />
+        return <Navigate to="/" replace />
     }
 
     const onSubmit = (data: AuthRequest) => {

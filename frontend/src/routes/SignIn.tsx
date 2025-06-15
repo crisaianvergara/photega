@@ -1,5 +1,5 @@
 import { fetchCurrentUser, login } from '../features/auth/AuthThunk'
-import { Navigate, useNavigate } from 'react-router'
+import { Link, Navigate, useNavigate } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../app/hook'
 import { useForm } from 'react-hook-form'
 import type { AuthRequest } from '../types/auth'
@@ -16,7 +16,7 @@ function SignIn() {
     } = useForm<AuthRequest>()
 
     if (auth.user) {
-        return <Navigate to="/" />
+        return <Navigate to="/" replace />
     }
 
     const onSubmit = (data: AuthRequest) => {
@@ -38,7 +38,7 @@ function SignIn() {
         <section className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
-                    alt="Your Company"
+                    alt="Photega"
                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                     className="mx-auto h-10 w-auto"
                 />
@@ -89,12 +89,12 @@ function SignIn() {
                                 Password
                             </label>
                             <div className="text-sm">
-                                <a
-                                    href="#"
+                                <Link
+                                    to="/forgot-password"
                                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                                 >
                                     Forgot password?
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="mt-2">

@@ -3,18 +3,19 @@ import {
     type LoginResponse,
     type AuthRequest,
     type User,
+    type ForgotPasswordRequest,
 } from '../../types/auth'
 import instance from '../../lib/axios'
 
 export const login = createAsyncThunk<LoginResponse, AuthRequest>(
     'auth/login',
-    async (userData, thunkAPI) => {
+    async (data, thunkAPI) => {
         try {
             const response = await instance.post(
                 '/auth/jwt/login',
                 {
-                    username: userData.email,
-                    password: userData.password,
+                    username: data.email,
+                    password: data.password,
                 },
                 {
                     headers: {
@@ -43,11 +44,11 @@ export const fetchCurrentUser = createAsyncThunk<User | any>(
 
 export const createAccount = createAsyncThunk<User, AuthRequest>(
     'auth/register',
-    async (userData, thunkAPI) => {
+    async (data, thunkAPI) => {
         try {
             const response = await instance.post('/auth/register', {
-                email: userData.email,
-                password: userData.password,
+                email: data.email,
+                password: data.password,
             })
 
             return response.data
@@ -66,3 +67,18 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
         return thunkAPI.rejectWithValue(error.response.data.detail)
     }
 })
+
+export const forgotPassword = createAsyncThunk<any, ForgotPasswordRequest>(
+    'auth/forgotPassword',
+    async (data, thunkAPI) => {
+        try {
+            const response = await instance.post('/auth/forgot-password', {
+                email: data.email,
+            })
+
+            return response.data
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data.detail)
+        }
+    }
+)
