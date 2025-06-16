@@ -4,6 +4,7 @@ import {
     type AuthRequest,
     type User,
     type ForgotPasswordRequest,
+    type ResetPasswordRequest,
 } from '../../types/auth'
 import instance from '../../lib/axios'
 
@@ -50,7 +51,6 @@ export const createAccount = createAsyncThunk<User, AuthRequest>(
                 email: data.email,
                 password: data.password,
             })
-
             return response.data
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data.detail)
@@ -74,7 +74,21 @@ export const forgotPassword = createAsyncThunk<any, ForgotPasswordRequest>(
             const response = await instance.post('/auth/forgot-password', {
                 email: data.email,
             })
+            return response.data
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data.detail)
+        }
+    }
+)
 
+export const resetPassword = createAsyncThunk<any, ResetPasswordRequest>(
+    'auth/resetPassword',
+    async (data, thunkAPI) => {
+        try {
+            const response = await instance.post('/auth/reset-password', {
+                token: data.token,
+                password: data.newPassword,
+            })
             return response.data
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data.detail)

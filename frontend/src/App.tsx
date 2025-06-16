@@ -8,6 +8,7 @@ import { useAppDispatch } from './app/hook'
 import { useEffect } from 'react'
 import { fetchCurrentUser } from './features/auth/AuthThunk'
 import ForgotPassword from './routes/ForgotPassword'
+import ResetPassword from './routes/ResetPassword'
 
 function App() {
     const dispatch = useAppDispatch()
@@ -28,6 +29,7 @@ function App() {
                         path="/forgot-password"
                         element={<ForgotPassword />}
                     />
+                    <Route path="/reset-password" element={<ResetPassword />} />
                 </Routes>
             </main>
             <Footer />

@@ -28,5 +28,6 @@ export interface ForgotPasswordRequest {
 }
 
 export interface ResetPasswordRequest {
-    password: string
+    token: string | null
+    newPassword: string
 }
